@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import {
   CalendarDays, Users, Scissors, BarChart3, Settings,
-  Bell, Search, Menu, ChevronDown
+  Bell, Search, Menu, ChevronDown, X
 } from 'lucide-react';
 import { useSearch } from '../context/SearchContext';
 
