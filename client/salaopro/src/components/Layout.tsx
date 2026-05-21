@@ -1,81 +1,141 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
-import { Calendar, Users, Scissors, LayoutDashboard } from 'lucide-react';
+import {
+  CalendarDays, Users, Scissors, BarChart3, Settings,
+  Bell, Search, Menu, ChevronDown
+} from 'lucide-react';
+import { useSearch } from '../context/SearchContext';
+
+const navItems = [
+  {
+    section: 'Principal',
+    items: [
+      { path: '/', icon: CalendarDays, label: 'Agenda', badge: null },
+      { path: '/clients', icon: Users, label: 'Clientes', badge: null },
+      { path: '/services', icon: Scissors, label: 'Serviços', badge: null },
+      { path: '/reports', icon: BarChart3, label: 'Relatórios', badge: 'Novo' },
+    ]
+  },
+  {
+    section: 'Sistema',
+    items: [
+      { path: '/settings', icon: Settings, label: 'Configurações', badge: null },
+    ]
+  }
+];
+
+const pageTitles: Record<string, { title: string; subtitle: string }> = {
+  '/': { title: 'Agenda', subtitle: 'Gerencie seus agendamentos' },
+  '/clients': { title: 'Clientes', subtitle: 'Sua base de clientes' },
+  '/services': { title: 'Serviços', subtitle: 'Tabela de preços e procedimentos' },
+  '/reports': { title: 'Relatórios', subtitle: 'Visão financeira do negócio' },
+  '/settings': { title: 'Configurações', subtitle: 'Personalize seu espaço' },
+};
 
 const Layout: React.FC = () => {
   const location = useLocation();
-
-  const menuItems = [
-    { path: '/', icon: Calendar, label: 'Agenda de Atendimentos' },
-    { path: '/clients', icon: Users, label: 'Gestão de Clientes' },
-    { path: '/services', icon: Scissors, label: 'Tabela de Serviços' },
-  ];
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { searchTerm, setSearchTerm } = useSearch();
+  const page = pageTitles[location.pathname] || { title: 'Página', subtitle: '' };
 
   return (
-    <div className="layout-container" style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f9fafb' }}>
+    <div className="layout">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 99 }}
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside style={{
-        width: '280px',
-        backgroundColor: '#ffffff',
-        borderRight: '1px solid #e5e7eb',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'fixed',
-        height: '100vh',
-        zIndex: 10
-      }}>
-        <div style={{ padding: '2rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ backgroundColor: '#4f46e5', padding: '8px', borderRadius: '10px' }}>
-            <Calendar color="white" size={24} />
+      <aside className="sidebar" style={sidebarOpen ? { transform: 'translateX(0)' } : {}}>
+        <div className="sidebar-logo">
+          <div className="logo-mark">S</div>
+          <div>
+            <div className="logo-text">Salão<span>Pro</span></div>
           </div>
-          <h1 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: '#111827', letterSpacing: '-0.025em' }}>
-            99SALÃO <span style={{ color: '#4f46e5' }}>PRO</span>
-          </h1>
         </div>
 
-        <nav style={{ padding: '0 0.75rem', flexGrow: 1 }}>
-          {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0.875rem 1rem',
-                  textDecoration: 'none',
-                  borderRadius: '0.75rem',
-                  marginBottom: '0.5rem',
-                  transition: 'all 0.2s',
-                  backgroundColor: isActive ? '#f0efff' : 'transparent',
-                  color: isActive ? '#4f46e5' : '#4b5563',
-                  fontWeight: isActive ? 600 : 500,
-                }}
-              >
-                <Icon size={20} style={{ marginRight: '0.75rem' }} />
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div style={{ flex: 1, overflow: 'auto', padding: '8px 0' }}>
+          {navItems.map(section => (
+            <div key={section.section} className="sidebar-section">
+              <div className="sidebar-label">{section.section}</div>
+              {section.items.map(item => {
+                const isActive = location.pathname === item.path;
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`nav-item ${isActive ? 'active' : ''}`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <Icon className="nav-icon" />
+                    {item.label}
+                    {item.badge && <span className="nav-badge">{item.badge}</span>}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
+        </div>
 
-        <div style={{ padding: '1.5rem', borderTop: '1px solid #e5e7eb', fontSize: '0.75rem', color: '#9ca3af', textAlign: 'center' }}>
-          © 2026 SalaoPro - Premium Version
+        <div className="sidebar-footer">
+          <div className="sidebar-user">
+            <div className="user-avatar">AU</div>
+            <div className="user-info">
+              <div className="user-name">Seu Salão</div>
+              <div className="user-role">Plano Pro</div>
+            </div>
+            <ChevronDown size={14} color="var(--text-muted)" />
+          </div>
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main style={{ marginLeft: '280px', flexGrow: 1, padding: '2rem 3rem' }}>
-        <header style={{ marginBottom: '2.5rem' }}>
-          <p style={{ color: '#6b7280', margin: 0, fontSize: '0.875rem' }}>Bem-vindo de volta!</p>
-          <h2 style={{ fontSize: '1.875rem', fontWeight: 700, margin: '0.25rem 0' }}>
-            {menuItems.find(i => i.path === location.pathname)?.label || 'Visão Geral'}
-          </h2>
+      {/* Main content */}
+      <div className="main">
+        <header className="topbar">
+          <button
+            className="btn-icon"
+            style={{ display: 'none' }}
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu size={16} />
+          </button>
+
+          <div>
+            <div className="topbar-title">{page.title}</div>
+            <div className="topbar-sub">{page.subtitle}</div>
+          </div>
+
+          <div className="topbar-actions">
+            <div className="search-bar" style={{ display: 'flex' }}>
+              <Search className="search-icon" />
+              <input
+                type="text"
+                placeholder="Buscar..."
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            <button className="btn-icon" style={{ position: 'relative' }}>
+              <Bell size={16} />
+              <span style={{
+                position: 'absolute', top: 6, right: 6,
+                width: 6, height: 6, borderRadius: '50%',
+                background: 'var(--brand)', border: '1.5px solid var(--bg-card)'
+              }} />
+            </button>
+          </div>
         </header>
-        <Outlet />
-      </main>
+
+        <main className="page-content">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };
