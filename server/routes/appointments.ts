@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
       include: { service: true, client: true }
     });
 
-    const realConflict = allAppsOnDay.find(app => {
+    const realConflict = allAppsOnDay.find((app: any) => {
       const appStart = new Date(app.date).getTime();
       const appEnd = appStart + app.service.duration * 60000;
       const newStart = new Date(date).getTime();
@@ -128,7 +128,7 @@ router.put('/:id', async (req, res) => {
       include: { service: true, client: true }
     });
 
-    const realConflict = allAppsOnDay.find(app => {
+    const realConflict = allAppsOnDay.find((app: any) => {
       const appStart = new Date(app.date).getTime();
       const appEnd = appStart + app.service.duration * 60000;
       const newStart = newDate.getTime();
