@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   try {
     const services = await prisma.service.findMany();
     res.json(services);
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({ error: 'Erro ao buscar serviços' });
   }
 });
