@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import api from '../api';
 import {
   Plus, Scissors, Edit2, Trash2, X, DollarSign,
-  Clock, AlertCircle, Search
+  Clock, AlertCircle
 } from 'lucide-react';
 import { useSearch } from '../context/SearchContext';
 

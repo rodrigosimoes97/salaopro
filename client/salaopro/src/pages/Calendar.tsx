@@ -28,12 +28,6 @@ interface EventItem {
   resource: Appointment;
 }
 
-const STATUS_COLORS = [
-  'var(--brand)',
-  'var(--info)',
-  'var(--success)',
-];
-
 const CalendarPage: React.FC = () => {
   const [events, setEvents] = useState<EventItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -156,12 +150,12 @@ const CalendarPage: React.FC = () => {
 
   const selectedService = services.find(s => String(s.id) === formData.serviceId);
 
-  const eventStyleGetter = (event: EventItem) => ({
+  const eventStyleGetter = () => ({
     style: {
       background: 'var(--brand)',
       border: 'none',
       borderRadius: '6px',
-      color: '#0D0C0B',
+      color: '#FFFFFF',
       fontSize: '12px',
       fontWeight: '500',
       padding: '2px 6px',
@@ -194,12 +188,12 @@ const CalendarPage: React.FC = () => {
             style={{ height: '100%' }}
             eventPropGetter={eventStyleGetter}
             onSelectSlot={openNewModal}
-            onSelectEvent={(event) => setSelectedEvent(event as EventItem)}
+            onSelectEvent={(event: any) => setSelectedEvent(event as EventItem)}
             selectable
             view={currentView}
-            onView={(view) => setCurrentView(view)}
+            onView={(view: any) => setCurrentView(view)}
             date={currentDate}
-            onNavigate={(date) => setCurrentDate(date)}
+            onNavigate={(date: Date) => setCurrentDate(date)}
             views={['month', 'week', 'day']}
             culture="pt-BR"
             messages={{
@@ -210,7 +204,7 @@ const CalendarPage: React.FC = () => {
               week: 'Semana',
               day: 'Dia',
               agenda: 'Agenda',
-              showMore: (total) => `+${total} mais`,
+              showMore: (total: number) => `+${total} mais`,
               noEventsInRange: 'Nenhum agendamento neste período',
             }}
             popup

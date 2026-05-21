@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import api from '../api';
 import {
-  UserPlus, Search, Edit2, Trash2, X, Phone, Mail,
-  User, AlertCircle, ChevronRight, MoreHorizontal
+  UserPlus, Edit2, Trash2, X, Phone, Mail,
+  User, AlertCircle
 } from 'lucide-react';
 import { useSearch } from '../context/SearchContext';
 

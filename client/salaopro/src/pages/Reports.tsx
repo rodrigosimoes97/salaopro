@@ -198,7 +198,7 @@ const ReportsPage: React.FC = () => {
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {topServices.map(([name, data], i) => {
+              {topServices.map(([name, data]) => {
                 const maxCount = topServices[0][1].count;
                 const pct = (data.count / maxCount) * 100;
                 return (

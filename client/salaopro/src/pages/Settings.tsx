@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Monitor, Layout, Bell, Shield, Database } from 'lucide-react';
+import { Sun, Moon, Layout, Bell, Shield, Database } from 'lucide-react';
 
 const SettingsPage: React.FC = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
