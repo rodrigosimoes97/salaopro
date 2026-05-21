@@ -1,18 +1,17 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaLibSql } from '@prisma/adapter-libsql';
-import { createClient } from '@libsql/client';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const url = process.env.DATABASE_URL || 'file:./dev.db';
-
-// No Prisma 7, o adaptador pode precisar de um objeto de configuração ou do cliente.
-// O erro TS2345 sugere que ele quer o objeto de configuração (Config) que contém 'url'.
-const adapter = new PrismaLibSql({
-  url: url,
+// No Prisma 7+, se você não usa um adaptador específico (como edge functions), 
+// a URL pode ser passada diretamente ou via prisma.config.ts.
+// Para PostgreSQL padrão no Render, o construtor busca automaticamente ou aceita o datasources.
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
 });
-
-const prisma = new PrismaClient({ adapter });
 
 export default prisma;

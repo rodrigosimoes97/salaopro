@@ -49,12 +49,19 @@ const Layout: React.FC = () => {
       )}
 
       {/* Sidebar */}
-      <aside className="sidebar" style={sidebarOpen ? { transform: 'translateX(0)' } : {}}>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-logo">
           <div className="logo-mark">S</div>
           <div>
             <div className="logo-text">Salão<span>Pro</span></div>
           </div>
+          <button 
+            className="btn-icon" 
+            style={{ marginLeft: 'auto', display: sidebarOpen ? 'flex' : 'none' }}
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X size={16} />
+          </button>
         </div>
 
         <div style={{ flex: 1, overflow: 'auto', padding: '8px 0' }}>
@@ -97,11 +104,10 @@ const Layout: React.FC = () => {
       <div className="main">
         <header className="topbar">
           <button
-            className="btn-icon"
-            style={{ display: 'none' }}
+            className="menu-toggle"
             onClick={() => setSidebarOpen(true)}
           >
-            <Menu size={16} />
+            <Menu size={20} />
           </button>
 
           <div>
