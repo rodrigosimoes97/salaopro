@@ -59,13 +59,15 @@ const CalendarPage: React.FC = () => {
       ]);
       setClients(clientsRes.data);
       setServices(servicesRes.data);
-      const formatted: EventItem[] = appsRes.data.map((app: Appointment) => ({
-        id: app.id,
-        title: `${app.client.name}`,
-        start: new Date(app.date),
-        end: new Date(new Date(app.date).getTime() + app.service.duration * 60000),
-        resource: app,
-      }));
+      const formatted: EventItem[] = appsRes.data
+        .filter((app: Appointment) => app.client && app.service)
+        .map((app: Appointment) => ({
+          id: app.id,
+          title: `${app.client.name}`,
+          start: new Date(app.date),
+          end: new Date(new Date(app.date).getTime() + app.service.duration * 60000),
+          resource: app,
+        }));
       setEvents(formatted);
     } catch {
       setError('Erro ao carregar dados. Verifique a conexão.');
