@@ -1,6 +1,6 @@
-import "dotenv/config";
+require("dotenv").config();
 
-export default {
+module.exports = {
   earlyAdopter: true,
   schema: "prisma/schema.prisma",
   datasource: {
