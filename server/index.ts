@@ -11,7 +11,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({
-  origin: '*', // Em produção, você pode restringir para o domínio da sua Vercel
+  origin: process.env.NODE_ENV === 'production' 
+    ? [/\.vercel\.app$/] 
+    : '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
