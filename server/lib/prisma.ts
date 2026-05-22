@@ -1,10 +1,19 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import pg from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// O Prisma Client lerá automaticamente a DATABASE_URL do ambiente
-// Para o Neon, certifique-se que a URL termina com ?sslmode=require
-const prisma = new PrismaClient();
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new pg.Pool({ 
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 export default prisma;
