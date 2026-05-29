@@ -726,6 +726,7 @@ tbody tr:hover { background: rgba(255,255,255,0.02); }
   font-weight: 600 !important;
   color: var(--text-primary) !important;
   letter-spacing: -0.3px;
+  text-transform: capitalize;
 }
 
 .rbc-month-view, .rbc-time-view {
@@ -765,10 +766,10 @@ tbody tr:hover { background: rgba(255,255,255,0.02); }
 .rbc-event:hover { opacity: 0.85 !important; }
 .rbc-event.rbc-selected { background: var(--brand-light) !important; }
 
-.rbc-timeslot-group { border-color: var(--border) !important; min-height: 44px; }
-.rbc-time-slot { color: var(--text-muted) !important; font-size: 11px !important; }
-.rbc-time-content { border-color: var(--border) !important; }
-.rbc-time-header-content { border-color: var(--border) !important; }
+.rbc-timeslot-group { border-color: var(--border-hover) !important; min-height: 44px; }
+.rbc-time-slot { border-color: var(--border-hover) !important; color: var(--text-muted) !important; font-size: 11px !important; }
+.rbc-time-content { border-color: var(--border-hover) !important; }
+.rbc-time-header-content { border-color: var(--border-hover) !important; }
 .rbc-current-time-indicator { background: var(--brand) !important; height: 2px !important; }
 .rbc-time-gutter .rbc-label { color: var(--text-muted) !important; font-size: 11px !important; }
 

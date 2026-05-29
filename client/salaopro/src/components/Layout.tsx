@@ -51,9 +51,9 @@ const Layout: React.FC = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-logo">
-          <div className="logo-mark">S</div>
+          <div className="logo-mark">CM</div>
           <div>
-            <div className="logo-text">Salão<span>Pro</span></div>
+            <div className="logo-text">Carol <span>Maxi</span></div>
           </div>
           <button 
             className="btn-icon" 
@@ -90,9 +90,9 @@ const Layout: React.FC = () => {
 
         <div className="sidebar-footer">
           <div className="sidebar-user">
-            <div className="user-avatar">AU</div>
+            <div className="user-avatar">CM</div>
             <div className="user-info">
-              <div className="user-name">Seu Salão</div>
+              <div className="user-name">Carol Maxi</div>
               <div className="user-role">Plano Pro</div>
             </div>
             <ChevronDown size={14} color="var(--text-muted)" />

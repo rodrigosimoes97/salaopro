@@ -165,6 +165,13 @@ const CalendarPage: React.FC = () => {
     }
   });
 
+  const calendarFormats = {
+    dayHeaderFormat: 'dd MMM (EEEE)',
+    dayRangeHeaderFormat: ({ start, end }: any, culture: any, localizer: any) =>
+      `${localizer.format(start, 'dd MMM', culture)} – ${localizer.format(end, 'dd MMM', culture)}`,
+    dayFormat: 'dd/MM EEE',
+  };
+
   return (
     <div>
       <div className="page-header">
@@ -193,6 +200,9 @@ const CalendarPage: React.FC = () => {
             onSelectSlot={openNewModal}
             onSelectEvent={(event: any) => setSelectedEvent(event as EventItem)}
             selectable
+            step={15}
+            timeslots={2}
+            formats={calendarFormats}
             view={currentView}
             onView={(view: any) => setCurrentView(view)}
             date={currentDate}
